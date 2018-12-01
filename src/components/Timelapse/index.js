@@ -1,15 +1,34 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import './index.css';
 import VideoPlayer from '../VideoPlayer';
 
-export default class Timelapse extends Component {
+import { videoEnded } from '../../actions';
+
+class Timelapse extends Component {
 	render() {
 		return(
 			<div>
 				<VideoPlayer
-					src='Looping_Clouds.mp4'
+					src={this.props.queue.playing.src}
+					onEnded={this.props.videoEnded}
 				/>
 			</div>
 		);
 	}
 }
+
+const mapStateToProps = (state) => {
+	return {
+		queue: state.queue,
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return bindActionCreators({
+		videoEnded,
+	}, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Timelapse);
