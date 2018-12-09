@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './index.css';
-import uikit from 'uikit';
 
 export default class VideoPlayer extends Component {
 	constructor(props) {
@@ -18,9 +17,10 @@ export default class VideoPlayer extends Component {
 		return(
 			<video
 				className="VideoPlayer"
-				uk-video="autoplay: inview"
 				src={this.props.src}
 				onEnded={this.onEnded}
+				autoPlay={true}
+				muted={true}
 			/>
 		);
 	}

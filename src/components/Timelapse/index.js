@@ -3,8 +3,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './index.css';
 import VideoPlayer from '../VideoPlayer';
+import HashtagBar from '../HashtagBar';
 
-import { videoEnded } from '../../actions';
+import {
+	videoEnded,
+	hashtagAdded,
+	hashtagToggled,
+	hashtagUser,
+} from '../../actions';
 
 class Timelapse extends Component {
 	render() {
@@ -14,6 +20,12 @@ class Timelapse extends Component {
 					src={this.props.queue.playing.src}
 					onEnded={this.props.videoEnded}
 				/>
+				<HashtagBar
+					hashtags={this.props.hashtags}
+					hashtagAdded={this.props.hashtagAdded}
+					hashtagToggled={this.props.hashtagToggled}
+					hashtagUser={this.props.hashtagUser}
+				/>
 			</div>
 		);
 	}
@@ -22,12 +34,16 @@ class Timelapse extends Component {
 const mapStateToProps = (state) => {
 	return {
 		queue: state.queue,
+		hashtags: state.hashtags,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		videoEnded,
+		hashtagAdded,
+		hashtagToggled,
+		hashtagUser,
 	}, dispatch);
 };
 

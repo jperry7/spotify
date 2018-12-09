@@ -1,0 +1,45 @@
+div {
+	--hashtag-shadow: 0.1vh 0.1vh 0.1vh rgba(0,0,0,1);
+	--hashtag-active-shadow: 0 0 1vh rgba(255,152,0,1);
+	--hashtag-color: rgba(192,192,192,1);
+	--hashtag-active-color: rgba(255,255,255,1);
+}
+
+.HashtagBar
+{
+	position: fixed;
+	top: 0;
+	left: 0;
+	color: #FFFFFF;
+	width: 100%;
+	padding: 1vh 2vh;
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0.75), rgba(0,0,0,0) 100%);
+	text-align: left;
+}
+
+.Hashtag {
+	display: inline-block;
+	padding-right: 2vh;
+	font-family: 'Six Caps', sans-serif;
+	font-size: 4vh;
+	letter-spacing: 0.4vh;
+	text-transform: uppercase;
+}
+
+.Hashtag:hover {
+	text-decoration: underline;
+}
+
+.HashtagActive {
+	-webkit-text-shadow: var(--hashtag-active-shadow);
+	-moz-text-shadow: var(--hashtag-active-shadow);
+	text-shadow: var(--hashtag-active-shadow);
+	color: var(--hashtag-active-color);
+}
+
+.HashtagInactive {
+	-webkit-text-shadow: var(--hashtag-shadow);
+	-moz-text-shadow: var(--hashtag-shadow);
+	text-shadow: var(--hashtag-shadow);
+	color: var(--hashtag-color);
+}
