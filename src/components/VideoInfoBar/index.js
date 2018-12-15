@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Moment from 'react-moment';
+import 'moment-timezone';
 import './index.css';
 
 export default class VideoInfoBar extends Component {
@@ -67,6 +69,18 @@ export default class VideoInfoBar extends Component {
 		return <div className='VideoInfoLocation'>{location.name}</div>;
 	}
 
+	renderTime(timestamp) {
+		if(!timestamp) return <div></div>;
+
+		return(
+						<div className='VideoInfoTime'>
+							<Moment unix fromNow>
+								{timestamp}
+							</Moment>
+						</div>
+		);
+	}
+
 	renderVideoInfo() {
 		console.log(this.props.hashtags.playing);
 
@@ -80,6 +94,7 @@ export default class VideoInfoBar extends Component {
 			<div>
 				{this.renderOwner(playing.owner)}
 				{this.renderLocation(playing.location)}
+				{this.renderTime(playing.taken_at_timestamp)}
 				{this.renderHashtags(playing.hashtags)}
 			</div>
 		);
