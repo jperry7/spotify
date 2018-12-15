@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import './index.css';
 import VideoPlayer from '../VideoPlayer';
 import HashtagBar from '../HashtagBar';
+import VideoInfoBar from '../VideoInfoBar';
 
 import {
 	videoEnded,
@@ -72,6 +73,11 @@ class Timelapse extends Component {
 					hashtagAdded={this.props.hashtagAdded}
 					hashtagToggled={this.props.hashtagToggled}
 					hashtagUser={this.props.hashtagUser}
+				/>
+				<VideoInfoBar
+					hashtags={this.props.hashtags}
+					hashtagAdded={this.props.hashtagAdded}
+					hashtagToggled={this.props.hashtagToggled}
 				/>
 			</div>
 		);
