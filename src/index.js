@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
+
+import ReduxThrottle from 'redux-throttle';
+import HashtagSearch from './middleware/HashtagSearchMiddleware';
+import VideoSearch from './middleware/VideoSearchMiddleware';
 import ReduxPromise from 'redux-promise';
 
 import './index.css';
@@ -11,6 +15,12 @@ import Reducers from './reducers';
 import Timelapse from './components/Timelapse';
 
 import * as serviceWorker from './serviceWorker';
+
+const DEFAULT_THROTTLE_WAIT = 1000;
+const DEFAULT_THROTTLE_OPTIONS = {
+	leading: true,
+	trailing: true,
+};
 
 const routing = (
 	<Router>
@@ -23,7 +33,14 @@ const routing = (
 
 const provider = (
 	<Provider
-		store={applyMiddleware(ReduxPromise)(createStore)(Reducers)}
+		store={
+						applyMiddleware(
+							ReduxThrottle(DEFAULT_THROTTLE_WAIT, DEFAULT_THROTTLE_OPTIONS),
+							HashtagSearch,
+							VideoSearch,
+							ReduxPromise,
+						)(createStore)(Reducers)
+					}
 	>
 		{routing}
 	</Provider>

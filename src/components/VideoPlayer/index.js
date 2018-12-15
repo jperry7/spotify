@@ -10,14 +10,14 @@ export default class VideoPlayer extends Component {
 	onEnded(e) {
 		e.target.currentTime = 0;
 		e.target.play();
-		this.props.onEnded();
+		this.props.onEnded(this.props);
 	}
 
 	render() {
 		return(
 			<video
 				className="VideoPlayer"
-				src={this.props.src}
+				src={this.props.hashtags.playing.video_url}
 				onEnded={this.onEnded}
 				autoPlay={true}
 				muted={true}
