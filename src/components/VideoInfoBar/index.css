@@ -52,3 +52,8 @@ div {
 .VideoInfoOwner:hover {
 	text-decoration: underline;
 }
+
+.VideoInfoLocation {
+	font-family: 'Roboto', sans-serif;
+	font-size: 2vh;
+}

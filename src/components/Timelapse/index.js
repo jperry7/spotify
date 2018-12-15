@@ -42,7 +42,8 @@ class Timelapse extends Component {
 	}
 
 	searchHashtags() {
-		const hashtags = [...this.props.hashtags.active, ...this.props.hashtags.inactive];
+		const hashtags = [...this.props.hashtags.active];
+		// const hashtags = [...this.props.hashtags.active, ...this.props.hashtags.inactive];
 
 		if(hashtags.length) {
 			const hashtag = _.sample(hashtags);

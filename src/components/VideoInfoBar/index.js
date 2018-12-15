@@ -9,7 +9,6 @@ export default class VideoInfoBar extends Component {
 	}
 
 	hashtagClicked(e) {
-		console.log("CLICK")
 		const hashtag = e.target
 											.textContent
 											.slice(1);
@@ -50,7 +49,7 @@ export default class VideoInfoBar extends Component {
 	}
 
 	renderOwner(owner) {
-		if(!owner) return <span></span>;
+		if(!owner) return <div></div>;
 
 		return <div
 						onClick={this.ownerClicked}
@@ -58,6 +57,14 @@ export default class VideoInfoBar extends Component {
 					 >
 					 		@{owner.username}
 					 </div>;
+	}
+
+	renderLocation(location) {
+		if(!location || !location.name || !location.name.length) {
+			return <div className='VideoInfoLocation'>Location Unknown</div>;
+		}
+
+		return <div className='VideoInfoLocation'>{location.name}</div>;
 	}
 
 	renderVideoInfo() {
@@ -72,6 +79,7 @@ export default class VideoInfoBar extends Component {
 		return(
 			<div>
 				{this.renderOwner(playing.owner)}
+				{this.renderLocation(playing.location)}
 				{this.renderHashtags(playing.hashtags)}
 			</div>
 		);

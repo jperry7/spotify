@@ -1,7 +1,10 @@
 import _ from 'lodash';
 
 const DEFAULT_QUEUE_VIDEO = {
-	video_url: 'Looping_Clouds.mp4'
+	video_url: 'Looping_Clouds.mp4',
+	location: {
+		name: 'Searching Instagram for videos...'
+	}
 };
 
 const DEFAULT_HASHTAGS = {
@@ -131,6 +134,7 @@ export default function(state=DEFAULT_HASHTAGS, action) {
 					if(video.shortcode === videoData.shortcode) {
 						video.video_url = videoData.video_url;
 						video.owner = videoData.owner;
+						video.location = videoData.location;
 					}
 					return video;
 				});
