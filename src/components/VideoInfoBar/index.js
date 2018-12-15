@@ -5,6 +5,7 @@ export default class VideoInfoBar extends Component {
 	constructor(props) {
 		super(props);
 		this.hashtagClicked = this.hashtagClicked.bind(this);
+		this.ownerClicked = this.ownerClicked.bind(this);
 	}
 
 	hashtagClicked(e) {
@@ -22,21 +23,41 @@ export default class VideoInfoBar extends Component {
 	renderHashtags(hashtags) {
 		if(!hashtags) return <span></span>;
 
-		return [...hashtags]
-			.sort()
-			.map(
-						hashtag => <span
-												key={'hashtag-' + hashtag}
-												className={
-																		(this.props.hashtags.active.has(hashtag)) ?
-																			'VideoInfoHashtag VideoInfoHashtagActive' :
-																			'VideoInfoHashtag VideoInfoHashtagInactive'
-																	}
-												onClick={this.hashtagClicked}
-											 >
-											 		#{hashtag}
-											 </span>
+		return(
+			<div>
+				{[...hashtags]
+					.sort()
+					.map(
+								hashtag => <span
+														key={'hashtag-' + hashtag}
+														className={
+																				(this.props.hashtags.active.has(hashtag)) ?
+																					'VideoInfoHashtag VideoInfoHashtagActive' :
+																					'VideoInfoHashtag VideoInfoHashtagInactive'
+																			}
+														onClick={this.hashtagClicked}
+													 >
+															#{hashtag}
+													 </span>
+				)}
+			</div>
 		);
+	}
+
+	ownerClicked(e) {
+		const url = `https://www.instagram.com/${this.props.hashtags.playing.owner.username}/`;
+		window.open(url,'_blank');
+	}
+
+	renderOwner(owner) {
+		if(!owner) return <span></span>;
+
+		return <div
+						onClick={this.ownerClicked}
+						className='VideoInfoOwner'
+					 >
+					 		@{owner.username}
+					 </div>;
 	}
 
 	renderVideoInfo() {
@@ -50,6 +71,7 @@ export default class VideoInfoBar extends Component {
 
 		return(
 			<div>
+				{this.renderOwner(playing.owner)}
 				{this.renderHashtags(playing.hashtags)}
 			</div>
 		);

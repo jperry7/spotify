@@ -84,7 +84,7 @@ export default function(state=DEFAULT_HASHTAGS, action) {
 				newState.active = new Set([...newState.active, newHashtag]);
 
 				newState = updateQueue(newState);
-				
+
 				break;
 			}
 
@@ -130,6 +130,7 @@ export default function(state=DEFAULT_HASHTAGS, action) {
 				queued = queued.map(video => {
 					if(video.shortcode === videoData.shortcode) {
 						video.video_url = videoData.video_url;
+						video.owner = videoData.owner;
 					}
 					return video;
 				});

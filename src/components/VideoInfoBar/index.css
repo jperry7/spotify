@@ -43,3 +43,12 @@ div {
 	-moz-text-shadow: var(--video-info-hashtag-active-shadow);
 	text-shadow: var(--video-info-hashtag-active-shadow);
 }
+
+.VideoInfoOwner {
+	font-family: 'Roboto', sans-serif;
+	font-size: 2vh;
+}
+
+.VideoInfoOwner:hover {
+	text-decoration: underline;
+}
