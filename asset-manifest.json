@@ -1,0 +1,13 @@
+{
+  "main.css": "/spotify/static/css/main.a68455d7.chunk.css",
+  "main.js": "/spotify/static/js/main.91225475.chunk.js",
+  "main.js.map": "/spotify/static/js/main.91225475.chunk.js.map",
+  "static/js/1.e6c1364d.chunk.js": "/spotify/static/js/1.e6c1364d.chunk.js",
+  "static/js/1.e6c1364d.chunk.js.map": "/spotify/static/js/1.e6c1364d.chunk.js.map",
+  "runtime~main.js": "/spotify/static/js/runtime~main.bb90536c.js",
+  "runtime~main.js.map": "/spotify/static/js/runtime~main.bb90536c.js.map",
+  "static/css/main.a68455d7.chunk.css.map": "/spotify/static/css/main.a68455d7.chunk.css.map",
+  "index.html": "/spotify/index.html",
+  "precache-manifest.6fd01121a21a29d8099c4c86a7f525f1.js": "/spotify/precache-manifest.6fd01121a21a29d8099c4c86a7f525f1.js",
+  "service-worker.js": "/spotify/service-worker.js"
+}
