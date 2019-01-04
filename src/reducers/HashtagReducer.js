@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
 const DEFAULT_QUEUE_VIDEO = {
-	video_url: 'Looping_Clouds.mp4',
+	video_url: 'https://zippy.gfycat.com/PeskyArtisticAxolotl.webm',
 	location: {
-		name: 'Searching Instagram for videos...'
+		name: 'Searching Instagram for videos matching hashtags...'
 	}
 };
 
@@ -14,7 +14,6 @@ const DEFAULT_HASHTAGS = {
 	playing: DEFAULT_QUEUE_VIDEO,
 	queued: 	new Set(),
 	played: 	new Set(),
-	skipped: 	new Set(),
 };
 
 const copyHashtagState = (state) => {
@@ -25,7 +24,6 @@ const copyHashtagState = (state) => {
 		playing: state.playing,
 		queued: 	new Set([...state.queued]),
 		played: 	new Set([...state.played]),
-		skipped: 	new Set([...state.skipped]),
 	};
 };
 
@@ -120,6 +118,7 @@ export default function(state=DEFAULT_HASHTAGS, action) {
 				break;
 			}
 
+			case 'VIDEO_SKIPPED':
 			case 'VIDEO_ENDED': {
 				newState.played = new Set([...newState.played, newState.playing.video_url]);
 				newState = updateQueue(newState);

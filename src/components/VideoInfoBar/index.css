@@ -62,3 +62,36 @@ div {
 	font-family: 'Roboto', sans-serif;
 	font-size: 2vh;
 }
+
+.SpotifyTrackName {
+	font-family: 'Roboto', sans-serif;
+	font-size: 2vh;
+}
+
+.SpotifyAlbum {
+	font-family: 'Roboto', sans-serif;
+	font-size: 2vh;
+}
+
+.SpotifyTempo {
+	font-family: 'Roboto', sans-serif;
+	font-size: 2vh;
+}
+
+.Skip {
+	padding-top: 5px;
+}
+
+.Author {
+	text-align: center;
+}
+
+.Author a,
+.Author a:visited,
+.Author a:hover,
+.Author a:active
+{
+	font-family: 'Roboto', sans-serif;
+	font-size: 1.5vh;
+	color: white;
+}

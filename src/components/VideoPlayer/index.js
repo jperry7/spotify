@@ -16,11 +16,13 @@ export default class VideoPlayer extends Component {
 	render() {
 		return(
 			<video
+				id='VideoPlayer'
 				className="VideoPlayer"
 				src={this.props.hashtags.playing.video_url}
 				onEnded={this.onEnded}
 				autoPlay={true}
 				muted={true}
+				playsInline={true}
 			/>
 		);
 	}

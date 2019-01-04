@@ -9,21 +9,93 @@ import VideoInfoBar from '../VideoInfoBar';
 
 import {
 	videoEnded,
+	videoSkipped,
 	hashtagAdded,
 	hashtagToggled,
 	hashtagUser,
 	hashtagSearched,
 	videoSearched,
+	refreshPlayback,
+	getSpotifyTrack,
 } from '../../actions';
 
 class Timelapse extends Component {
+	constructor(props) {
+		super(props);
+		this.isBeat = this.isBeat.bind(this);
+		this.tick = this.tick.bind(this);
+		this.getTempo = this.getTempo.bind(this);
+		this.state = { beating: false };
+	}
+
 	componentDidMount() {
 		this.props.hashtagSearched('timelapse');
+		this.tick();
 	}
 
 	componentDidUpdate() {
 		this.searchVideos();
 		this.searchHashtags();
+		this.refreshPlayback();
+		this.getSpotifyTrack();
+	}
+
+	tick() {
+		const currentTime = Date.now();
+		const tempo = this.getTempo();
+		const videoPlayer = document.getElementById('VideoPlayer');
+		const beating = (currentTime % tempo) > (tempo / 2);
+
+		if(beating != this.state.beating) {
+			if(beating) {
+				console.log('beat');
+				videoPlayer.playbackRate = 1.0;
+				this.setState({ beating: true });
+			} else {
+				videoPlayer.playbackRate = 0.0;
+				this.setState({ beating: false });
+			}
+		}
+
+		requestAnimationFrame(this.tick);
+	}
+
+	getTempo() {
+		const {playing} = this.props.playback;
+		if(playing) {
+			const {item, progress_ms} = playing;
+			if(item && progress_ms) {
+				const {id} = item;
+				if(id) {
+					if(this.props.playback.tracks.has(id)) {
+						const track = this.props.playback.tracks.get(id);
+						return(1 / track.tempo * 60 * 1000);
+					}
+				}
+			}
+		}
+		return 1;
+	}
+
+	isBeat() {
+		const {playing} = this.props.playback;
+		if(!playing) return false;
+		const {item, progress_ms, timestamp} = playing;
+		if(!item || !progress_ms) return false;
+
+		const {id} = item;
+		if(!id) return false;
+
+		if(!this.props.playback.tracks.has(id)) return false;
+
+		const track = this.props.playback.tracks.get(id);
+		if(!track) return false;
+
+		const beatTime = 1 / track.tempo * 60 * 1000;
+
+		if(Date.now() % beatTime < beatTime / 2) return true;
+
+		return false;
 	}
 
 	searchVideos() {
@@ -43,7 +115,6 @@ class Timelapse extends Component {
 
 	searchHashtags() {
 		const hashtags = [...this.props.hashtags.active];
-		// const hashtags = [...this.props.hashtags.active, ...this.props.hashtags.inactive];
 
 		if(hashtags.length) {
 			const hashtag = _.sample(hashtags);
@@ -60,12 +131,33 @@ class Timelapse extends Component {
 		}
 	}
 
+	refreshPlayback() {
+		if(this.props.playback.token && this.props.playback.token.length) {
+			this.props.refreshPlayback(this.props.playback.token);
+		}
+	}
+
+	getSpotifyTrack() {
+		if(this.props.playback.token && this.props.playback.token.length) {
+			if(this.props.playback.playing && this.props.playback.playing.item) {
+				if(this.props.playback.playing.item.id) {
+					const { id } = this.props.playback.playing.item;
+
+					if(!this.props.playback.tracks.has(id)) {
+							this.props.getSpotifyTrack(this.props.playback.token, id);
+					}
+				}
+			}
+		}
+	}
+
 	render() {
 		return(
 			<div>
 				<VideoPlayer
 					onEnded={this.props.videoEnded}
 					hashtags={this.props.hashtags}
+					playback={this.props.playback}
 					hashtagSearched={this.props.hashtagSearched}
 					videoSearched={this.props.videoSearched}
 				/>
@@ -77,8 +169,10 @@ class Timelapse extends Component {
 				/>
 				<VideoInfoBar
 					hashtags={this.props.hashtags}
+					playback={this.props.playback}
 					hashtagAdded={this.props.hashtagAdded}
 					hashtagToggled={this.props.hashtagToggled}
+					videoSkipped={this.props.videoSkipped}
 				/>
 			</div>
 		);
@@ -88,17 +182,21 @@ class Timelapse extends Component {
 const mapStateToProps = (state) => {
 	return {
 		hashtags: state.hashtags,
+		playback: state.playback,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		videoEnded,
+		videoSkipped,
 		hashtagAdded,
 		hashtagToggled,
 		hashtagUser,
 		hashtagSearched,
 		videoSearched,
+		refreshPlayback,
+		getSpotifyTrack,
 	}, dispatch);
 };
 

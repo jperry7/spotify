@@ -9,6 +9,7 @@
 	-moz-text-shadow: var(--user-hashtag-shadow);
 	text-shadow: var(--user-hashtag-shadow);
 
+	-webkit-appearance: none;
 	display: inline-block;
 	color: rgba(255,255,255,1);
 	font-family: 'Six Caps', sans-serif;

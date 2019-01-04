@@ -1,10 +1,18 @@
 const HASHTAG_SEARCH_THROTTLE_TIME = 5000;
 const VIDEO_SEARCH_THROTTLE_TIME = 2000;
+const REFRESH_PLAYBACK_THROTTLE_TIME = 1000;
+const GET_SPOTIFY_TRACK_THROTTLE_TIME = 1000;
 
 export function videoEnded({ hashtags, queue }) {
 	return {
 		type: 'VIDEO_ENDED',
 		payload: { hashtags, queue },
+	};
+}
+
+export function videoSkipped() {
+	return {
+		type: 'VIDEO_SKIPPED'
 	};
 }
 
@@ -49,4 +57,36 @@ export function videoSearched(shortcode) {
 			throttle: VIDEO_SEARCH_THROTTLE_TIME
 		},
 	};
+}
+
+export function setSpotifyToken(token) {
+	return {
+		type: 'SET_SPOTIFY_TOKEN',
+		payload: token,
+	}
+}
+
+export function refreshPlayback(accessToken) {
+	return {
+		type: 'REFRESH_PLAYBACK',
+		payload: {
+			accessToken: accessToken
+		},
+		meta: {
+			throttle: REFRESH_PLAYBACK_THROTTLE_TIME
+		}
+	}
+}
+
+export function getSpotifyTrack(accessToken, track) {
+	return {
+		type: 'GET_SPOTIFY_TRACK',
+		payload: {
+			accessToken: accessToken,
+			track: track,
+		},
+		meta: {
+			throttle: GET_SPOTIFY_TRACK_THROTTLE_TIME
+		}
+	}
 }
